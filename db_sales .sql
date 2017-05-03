@@ -1,0 +1,459 @@
+-- phpMyAdmin SQL Dump
+-- version 4.7.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost
+-- Generation Time: Apr 20, 2017 at 05:17 AM
+-- Server version: 5.7.17-0ubuntu0.16.04.2-log
+-- PHP Version: 7.0.18
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `db_sales`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_generate_squence`
+--
+
+CREATE TABLE `tbl_generate_squence` (
+  `GENERATE_ID` int(11) NOT NULL,
+  `TYPE` varchar(15) NOT NULL,
+  `SEQUENCE` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_generate_squence`
+--
+
+INSERT INTO `tbl_generate_squence` (`GENERATE_ID`, `TYPE`, `SEQUENCE`) VALUES
+(1, 'ORDER', 0),
+(2, 'ORDER_2', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_reset_password`
+--
+
+CREATE TABLE `tbl_reset_password` (
+  `id` bigint(20) NOT NULL,
+  `email` varchar(128) NOT NULL,
+  `activation_id` varchar(32) NOT NULL,
+  `agent` varchar(512) NOT NULL,
+  `client_ip` varchar(32) NOT NULL,
+  `isDeleted` tinyint(4) NOT NULL DEFAULT '0',
+  `createdBy` bigint(20) NOT NULL DEFAULT '1',
+  `createdDtm` datetime NOT NULL,
+  `updatedBy` bigint(20) DEFAULT NULL,
+  `updatedDtm` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_roles`
+--
+
+CREATE TABLE `tbl_roles` (
+  `roleId` tinyint(4) NOT NULL COMMENT 'role id',
+  `role` varchar(50) NOT NULL COMMENT 'role text'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_roles`
+--
+
+INSERT INTO `tbl_roles` (`roleId`, `role`) VALUES
+(1, 'System Administrator'),
+(2, 'Customer Service'),
+(3, 'User');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_users`
+--
+
+CREATE TABLE `tbl_users` (
+  `userId` int(11) NOT NULL,
+  `email` varchar(128) NOT NULL COMMENT 'login email',
+  `password` varchar(128) NOT NULL COMMENT 'hashed login password',
+  `name` varchar(128) DEFAULT NULL COMMENT 'full name of user',
+  `mobile` varchar(20) DEFAULT NULL,
+  `roleId` tinyint(4) NOT NULL,
+  `isDeleted` tinyint(4) NOT NULL DEFAULT '0',
+  `createdBy` int(11) DEFAULT NULL,
+  `createdDtm` datetime DEFAULT NULL,
+  `updatedBy` int(11) DEFAULT NULL,
+  `updatedDtm` datetime DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_users`
+--
+
+INSERT INTO `tbl_users` (`userId`, `email`, `password`, `name`, `mobile`, `roleId`, `isDeleted`, `createdBy`, `createdDtm`, `updatedBy`, `updatedDtm`) VALUES
+(1, 'admin@aphrodex.com', '202cb962ac59075b964b07152d234b70', 'Administrator', '9890098900', 1, 0, 0, '2015-07-01 18:56:49', 1, '2017-04-07 09:25:20'),
+(2, 'heru@aphrodex.com', 'e10adc3949ba59abbe56e057f20f883e', 'heru', '9890098900', 2, 0, 1, '2016-12-09 17:49:56', 1, '2017-02-10 17:23:53'),
+(3, 'employee@aphrodex.com', '$2y$10$M3ttjnzOV2lZSigBtP0NxuCtKRte70nc8TY5vIczYAQvfG/8syRze', 'Employee', '9890098900', 3, 0, 1, '2016-12-09 17:50:22', NULL, NULL),
+(4, 'cs@aphrodex.com', '8a35d12609da78b0a6c0e159eec3e97c', 'sales Creathinker', '0892342343', 2, 0, 1, '2017-04-07 08:49:12', NULL, NULL),
+(8, 'nuridincs@gmail.com', '202cb962ac59075b964b07152d234b70', 'nuridincs', NULL, 2, 0, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tm_cs`
+--
+
+CREATE TABLE `tm_cs` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `username` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `role_status` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tm_cs`
+--
+
+INSERT INTO `tm_cs` (`id`, `nama`, `username`, `password`, `email`, `role_status`) VALUES
+(1, 'nuridincCS', 'nuridincs', '202cb962ac59075b964b07152d234b70', 'nuridincs@aphordex.com', '2');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tm_network`
+--
+
+CREATE TABLE `tm_network` (
+  `id` int(11) NOT NULL,
+  `networkid` int(11) DEFAULT NULL,
+  `network_name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `postback_url` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `clickidsale` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tm_network`
+--
+
+INSERT INTO `tm_network` (`id`, `networkid`, `network_name`, `postback_url`, `clickidsale`) VALUES
+(1, 1, 'Voluum', 'http://8oh4x.trackvoluum.com/postback?payout=14&cid=', 'cid'),
+(8, 8, 'Creathinker', 'http://ctctrk.com/p.ashx?a=11&e=11&f=pb&r=', 'cid');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tm_visit`
+--
+
+CREATE TABLE `tm_visit` (
+  `id` int(11) NOT NULL,
+  `order_id` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nama` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `no_telpon` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `alamat` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `jml_botol` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `total_pembayaran` double DEFAULT NULL,
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `clickid` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `networkid` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order_status` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'PENDING',
+  `followup_id` int(11) DEFAULT NULL,
+  `wk_rekam` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tm_visit`
+--
+
+INSERT INTO `tm_visit` (`id`, `order_id`, `nama`, `no_telpon`, `alamat`, `jml_botol`, `total_pembayaran`, `email`, `clickid`, `networkid`, `order_status`, `followup_id`, `wk_rekam`) VALUES
+(1, NULL, 'Bejo', '0891248832', 'WRWER', NULL, NULL, NULL, 'sEhhVsmKcsnlToEx6s2h', '1', 'CANCEL', 4, NULL),
+(38, NULL, 'John', '089763247234', 'Jalan jalan', NULL, NULL, 'John@gmail.com', 'wSNU5T51NRP904I4H6SDCNB8', '1', 'CANCEL', 4, NULL),
+(39, NULL, 'smith', '08561238123', 'jalan smith', NULL, NULL, 'smith@gmail.com', 'wMARSTC2T7DMF4I419SD9LKS', '1', 'CANCEL', NULL, NULL),
+(57, NULL, 'Tejo', '08976871236821', 'jalan duri kepa', NULL, NULL, NULL, 'wV8APP3FQL9F1QI4H3MARR6S', '1', 'SALE', 0, NULL),
+(58, NULL, 'eka', '089787432', 'jalan duri kepa', NULL, NULL, NULL, 'w459U529BJ2DERI41M8VNBPE', '1', 'SALE', 0, NULL),
+(59, NULL, 'coba', '0988932943', 'jalan coba', NULL, NULL, NULL, 'wRA9GADAKNJP7RI41QSJ569O', '1', 'SALE', 0, NULL),
+(61, NULL, 'nuridincs', '089601373427', 'jalan amal raya', NULL, NULL, 'nuridincs@gmail.com', 'w36S43R9VFUSPRI4H9FTVI50', '1', 'SALE', 0, NULL),
+(62, NULL, 'dewi', '0852437234234', 'jalan dewi sartika', NULL, NULL, NULL, 'w6B9HMEGPDQ8KSI41UR7DLGS', '1', 'SALE', 0, NULL),
+(64, NULL, 'Robin', '0813175823983', 'Jonggol', NULL, NULL, NULL, 'wN2DH532GLI8VSI4HQ38MLOK', '1', 'SALE', 0, NULL),
+(86, NULL, 'Jordan', '0827834729847', 'Palangkaraya', NULL, NULL, NULL, '147616', '8', 'SALE', 0, NULL),
+(87, NULL, 'Voluum', '0234872389472', 'Poland', NULL, NULL, NULL, 'wEBKOOMLMF35M5J4HIVJBC38', '1', 'SALE', 0, NULL),
+(91, NULL, 'camelia vol', '0897842423423', 'jalan camel', NULL, NULL, NULL, 'wFNLP6LKMHM5F6J416VNDT6G', '1', 'SALE', 0, NULL),
+(94, NULL, 'Layla', '08749179234', 'Jonggol', NULL, NULL, NULL, '147616', '8', 'SALE', 4, NULL),
+(96, NULL, 'Rogue', '01729383794', 'ragnarok', NULL, NULL, NULL, '147616', '8', 'SALE', 0, NULL),
+(97, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '147616', '8', 'PENDING', 0, NULL),
+(101, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '147616', '8', 'PENDING', 0, NULL),
+(102, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '147616', '8', 'PENDING', 0, NULL),
+(103, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '147616', '8', 'PENDING', 0, NULL),
+(104, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '149455', '8', 'PENDING', 0, NULL),
+(105, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '149455', '8', 'PENDING', 0, NULL),
+(106, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '147616', '8', 'PENDING', 0, NULL),
+(107, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '149461', '8', 'PENDING', 0, NULL),
+(108, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '149455', '8', 'PENDING', 0, NULL),
+(110, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '147616', '8', 'PENDING', 0, NULL),
+(111, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '147616', '8', 'CANCEL', 8, NULL),
+(112, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', 0, NULL),
+(113, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', 0, NULL),
+(114, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', 0, NULL),
+(115, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', 0, NULL),
+(116, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', 0, NULL),
+(117, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', 0, NULL),
+(118, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', 0, NULL),
+(119, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', 0, NULL),
+(120, NULL, 'Cake test', '012839172871', 'sanur', NULL, NULL, NULL, '150672', '8', 'SALE', 0, NULL),
+(122, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '150901', '8', 'PENDING', 0, NULL),
+(123, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '150914', '8', 'PENDING', 0, NULL),
+(125, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '150976', '8', 'PENDING', 0, NULL),
+(126, NULL, NULL, NULL, 'Jl Villa Tomang Mas Baru No. 12, RT 03/RW 08, Duri Kepa, Kebon Jeruk, Jakarta Barat, 11510', NULL, NULL, NULL, '150977', '8', 'PENDING', 4, NULL),
+(127, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '150978', '8', 'PENDING', 0, NULL),
+(128, NULL, 'Test mobile ncs', '0897651616161', 'Jalan amal raya', NULL, NULL, NULL, '150979', '8', 'SALE', 0, NULL),
+(129, NULL, 'Mukidi Penasaran', '0216351321', 'Masih di benhil, suerr', NULL, NULL, NULL, '150998', '8', 'SALE', 0, NULL),
+(130, NULL, 'Patria', '01231281', 'hajar', NULL, NULL, NULL, '151023', '8', 'SALE', 0, NULL),
+(131, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '151023', '8', 'PENDING', 0, NULL),
+(132, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '151023', '8', 'PENDING', 0, NULL),
+(133, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '151023', '8', 'PENDING', 2, NULL),
+(134, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', 0, NULL),
+(135, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', 0, NULL),
+(136, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', 0, NULL),
+(137, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', 0, NULL),
+(138, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', 0, NULL),
+(139, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, NULL),
+(140, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, NULL),
+(141, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, NULL),
+(142, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, NULL),
+(143, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, NULL),
+(144, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, NULL),
+(145, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-12 18:58:07'),
+(146, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-13 01:33:36'),
+(147, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-13 02:24:09'),
+(148, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-13 02:25:16'),
+(149, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '147616', '8', 'PENDING', 4, '2017-04-13 03:59:26'),
+(150, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-13 05:02:39'),
+(151, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-13 05:21:30'),
+(152, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-13 06:17:05'),
+(153, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-13 06:17:05'),
+(154, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-13 08:16:06'),
+(155, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-13 09:21:19'),
+(156, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-13 10:42:32'),
+(157, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-13 11:47:15'),
+(158, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-13 12:19:29'),
+(159, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-13 12:20:05'),
+(160, NULL, 'dewi', '089723743232432', 'Jerman', '2', 1000000, NULL, 'w44TFF3JRMUD7KK4H89BQ4EE', '1', 'SALE', 4, '2017-04-13 12:49:23'),
+(161, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'wR7MMO0JGU5F9KK419A0TJDS', '1', 'PENDING', NULL, '2017-04-13 12:50:40'),
+(162, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'w44TFF3JRMUD7KK4H89BQ4EE', '1', 'PENDING', NULL, '2017-04-13 12:50:46'),
+(163, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-13 12:53:14'),
+(164, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-13 14:04:22'),
+(165, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-13 14:28:51'),
+(166, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-13 16:34:52'),
+(167, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-13 18:07:32'),
+(168, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-14 02:48:03'),
+(169, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-14 03:58:46'),
+(170, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-14 06:42:05'),
+(171, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-14 06:42:30'),
+(172, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '147616', '8', 'PENDING', NULL, '2017-04-14 06:42:44'),
+(173, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-14 07:31:36'),
+(174, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-14 08:23:19'),
+(175, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-14 08:33:35'),
+(176, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'wA2PC9DSF0LIG9L4HHQSFCR4', '1', 'PENDING', NULL, '2017-04-14 09:11:27'),
+(177, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'wKBB4J72CV5FN9L4HRPDH106', '1', 'PENDING', NULL, '2017-04-14 09:13:02'),
+(178, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'wA2PC9DSF0LIG9L4HHQSFCR4', '1', 'PENDING', NULL, '2017-04-14 09:13:02'),
+(179, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'wA2PC9DSF0LIG9L4HHQSFCR4', '1', 'PENDING', NULL, '2017-04-14 09:13:51'),
+(180, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'wS11LJLH7TV4I9L41GFHMA3K', '1', 'PENDING', NULL, '2017-04-14 09:15:50'),
+(181, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'wS11LJLH7TV4I9L41GFHMA3K', '1', 'PENDING', NULL, '2017-04-14 09:17:28'),
+(182, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'wS11LJLH7TV4I9L41GFHMA3K', '1', 'PENDING', NULL, '2017-04-14 09:18:59'),
+(183, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'wS11LJLH7TV4I9L41GFHMA3K', '1', 'PENDING', NULL, '2017-04-14 09:18:59'),
+(184, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'wS11LJLH7TV4I9L41GFHMA3K', '1', 'PENDING', NULL, '2017-04-14 09:19:00'),
+(185, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'wS11LJLH7TV4I9L41GFHMA3K', '1', 'PENDING', NULL, '2017-04-14 09:19:28'),
+(186, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'w1M9FP03N7C529L4HNSSBFO8', '1', 'PENDING', NULL, '2017-04-14 09:21:30'),
+(187, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'w1M9FP03N7C529L4HNSSBFO8', '1', 'PENDING', NULL, '2017-04-14 09:23:13'),
+(188, '2017041400002', 'ncs', '089789435435', NULL, '12', 430000, NULL, 'w8L9H6603HB6K9L41ETALFFU', '1', 'SALE', NULL, '2017-04-14 09:24:18'),
+(189, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'w8L9H6603HB6K9L41ETALFFU', '1', 'PENDING', NULL, '2017-04-14 09:25:52'),
+(190, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-14 09:28:09'),
+(191, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-14 09:48:11'),
+(192, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-14 09:59:02'),
+(193, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-14 14:04:33'),
+(194, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-14 18:43:03'),
+(195, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-14 19:23:33'),
+(196, '2017041500001', 'test terus', '12312321312', 'jakarta', NULL, NULL, NULL, 'wL71IVD4QINJTQL4HOR4B2VK', '1', 'PENDING', NULL, '2017-04-15 02:54:40'),
+(197, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-15 03:08:08'),
+(198, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-15 03:18:35'),
+(199, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-15 07:55:13'),
+(200, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-15 09:25:21'),
+(201, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-15 10:14:00'),
+(202, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-15 20:51:09'),
+(203, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-15 23:40:24'),
+(204, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-16 00:00:54'),
+(205, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-16 00:00:54'),
+(206, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '147616', '8', 'PENDING', NULL, '2017-04-16 01:05:48'),
+(207, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-16 01:17:14'),
+(208, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-16 01:47:56'),
+(209, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-16 02:37:07'),
+(210, '2017041600001', 'Daniel', '012371371987', 'Jl Pinang Merah', NULL, NULL, NULL, 'wSU223S3RVDERJM41543IG7A', '1', 'SALE', 2, '2017-04-16 03:14:50'),
+(211, '2017041600002', 'Johan', '0813175823983', 'PGA 2', NULL, NULL, NULL, 'wJCUFE7GGD5VSJM4HJ9HUD02', '1', 'SALE', 4, '2017-04-16 03:17:07'),
+(212, '2017041600003', 'Kevin', '01231281', 'Jl Pasak Bumi', NULL, NULL, NULL, '177705', '8', 'SALE', 4, '2017-04-16 03:27:51'),
+(213, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'wN8UI2R85A2I5JM4HA002G9S', '1', 'PENDING', NULL, '2017-04-16 03:45:37'),
+(214, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'wJPEJL7CSPES9JM41A6RPJI2', '1', 'PENDING', NULL, '2017-04-16 03:45:45'),
+(215, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'wJPEJL7CSPES9JM41A6RPJI2', '1', 'PENDING', NULL, '2017-04-16 03:45:51'),
+(216, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'wJPEJL7CSPES9JM41A6RPJI2', '1', 'PENDING', NULL, '2017-04-16 03:46:01'),
+(217, '2017041600004', 'testpayout', '0813175823983', NULL, NULL, NULL, NULL, 'wS86DHU873N1RKM4HDTKRHE0', '1', 'SALE', 2, '2017-04-16 04:23:04'),
+(218, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-16 04:32:24'),
+(219, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-16 06:03:25'),
+(220, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-16 07:58:21'),
+(221, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-16 08:42:33'),
+(222, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-16 17:26:24'),
+(223, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-16 20:55:52'),
+(224, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-17 01:51:56'),
+(225, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-17 01:53:10'),
+(226, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '147616', '8', 'PENDING', NULL, '2017-04-17 04:21:48'),
+(227, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-17 05:06:02'),
+(228, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-17 08:26:22'),
+(229, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-17 08:58:30'),
+(230, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-17 13:29:14'),
+(231, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-17 20:44:53'),
+(232, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 03:02:49'),
+(233, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '149455', '8', 'PENDING', NULL, '2017-04-18 03:38:04'),
+(234, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 03:41:30'),
+(235, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 05:57:07'),
+(236, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 05:57:07'),
+(237, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 05:57:07'),
+(238, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 05:57:07'),
+(239, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 05:57:08'),
+(240, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 05:57:08'),
+(241, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 05:57:08'),
+(242, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 06:41:14'),
+(243, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 07:42:05'),
+(244, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 07:48:06'),
+(245, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '147616', '8', 'PENDING', NULL, '2017-04-18 08:42:16'),
+(246, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 08:53:14'),
+(247, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 09:09:17'),
+(248, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 09:24:02'),
+(249, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 10:01:48'),
+(250, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 10:20:24'),
+(251, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '149455', '8', 'PENDING', NULL, '2017-04-18 10:53:16'),
+(252, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 11:04:46'),
+(253, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 11:11:34'),
+(254, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 11:30:26'),
+(255, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 11:35:30'),
+(256, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 12:20:24'),
+(257, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 13:00:30'),
+(258, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 13:03:26'),
+(259, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 13:40:36'),
+(260, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 18:17:18'),
+(261, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 18:39:11'),
+(262, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 18:48:15'),
+(263, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-18 23:37:48'),
+(264, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-19 00:00:55'),
+(265, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-19 00:10:47'),
+(266, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-19 00:14:11'),
+(267, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-19 01:00:24'),
+(268, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-19 01:46:36'),
+(269, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-19 04:17:40'),
+(270, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-19 06:51:08'),
+(271, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-19 07:29:51'),
+(272, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-19 09:14:41'),
+(273, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-19 09:14:46'),
+(274, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-19 09:58:56'),
+(275, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-19 10:03:39'),
+(276, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '147616', '8', 'PENDING', NULL, '2017-04-19 11:45:05'),
+(277, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-19 11:47:05'),
+(278, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-19 13:50:27'),
+(279, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-19 17:00:59'),
+(280, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-19 17:13:23'),
+(281, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-19 18:14:18'),
+(282, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-19 18:54:07'),
+(283, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-20 01:31:07'),
+(284, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-20 02:52:24'),
+(285, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-20 02:57:39'),
+(286, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-20 03:14:31'),
+(287, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '149455', '8', 'PENDING', NULL, '2017-04-20 03:24:58'),
+(288, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', 'PENDING', NULL, '2017-04-20 03:52:31');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `tbl_generate_squence`
+--
+ALTER TABLE `tbl_generate_squence`
+  ADD PRIMARY KEY (`GENERATE_ID`);
+
+--
+-- Indexes for table `tbl_reset_password`
+--
+ALTER TABLE `tbl_reset_password`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_roles`
+--
+ALTER TABLE `tbl_roles`
+  ADD PRIMARY KEY (`roleId`);
+
+--
+-- Indexes for table `tbl_users`
+--
+ALTER TABLE `tbl_users`
+  ADD PRIMARY KEY (`userId`);
+
+--
+-- Indexes for table `tm_cs`
+--
+ALTER TABLE `tm_cs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tm_visit`
+--
+ALTER TABLE `tm_visit`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `tbl_generate_squence`
+--
+ALTER TABLE `tbl_generate_squence`
+  MODIFY `GENERATE_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `tbl_reset_password`
+--
+ALTER TABLE `tbl_reset_password`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tbl_roles`
+--
+ALTER TABLE `tbl_roles`
+  MODIFY `roleId` tinyint(4) NOT NULL AUTO_INCREMENT COMMENT 'role id', AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `tbl_users`
+--
+ALTER TABLE `tbl_users`
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT for table `tm_cs`
+--
+ALTER TABLE `tm_cs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
